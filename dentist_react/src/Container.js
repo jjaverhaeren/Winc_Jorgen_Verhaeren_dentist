@@ -123,8 +123,10 @@ class Container extends Component {
         year: newYear,
         isIll: false,
       };
-      this.state.patients.push(newPatient);
-      this.setState({ patients: this.state.patients });
+      this.setState(prevState => ({
+        patients: [...prevState.patients, newPatient],
+      }));
+
       this.clearInputFields();
     } else if (event.target.childNodes[1].firstChild.checked === true) {
       let newId = this.state.dentists.length + 1;
@@ -153,8 +155,9 @@ class Container extends Component {
         canPull: newCanPull,
         canJaw: newCanJaw,
       };
-      this.state.dentists.push(newDentist);
-      this.setState({ dentists: this.state.dentists });
+      this.setState(prevState => ({
+        dentists: [...prevState.dentists, newDentist],
+      }));
       this.clearInputFields();
     } else if (event.target.childNodes[2].firstChild.checked === true) {
       let newId = this.state.assistents.length + 1;
@@ -173,9 +176,9 @@ class Container extends Component {
         year: newYear,
         isIll: false,
       };
-      this.state.assistents.push(newAssistent);
-      this.setState({ assistents: this.state.assistents });
-      console.log(this.state.assistents);
+      this.setState(prevState => ({
+        assistents: [...prevState.assistents, newAssistent],
+      }));
       this.clearInputFields();
     }
   }
