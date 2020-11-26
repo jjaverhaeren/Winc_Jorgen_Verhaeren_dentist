@@ -5,7 +5,7 @@ import SearchPatient from "./SearchPatient";
 import AddAppointment from "./AddAppointment";
 import "./Home.css";
 
-function Home(props) {
+const Home = props => {
   return (
     <div>
       <section className="add">
@@ -97,6 +97,6 @@ function Home(props) {
       ) : undefined}
     </div>
   );
-}
+};
 
 export default Home;

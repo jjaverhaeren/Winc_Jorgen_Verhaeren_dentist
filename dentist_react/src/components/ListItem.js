@@ -1,7 +1,7 @@
 import React from "react";
 import trashbin from "../images/trashbin.png";
 
-function ListItem(props) {
+const ListItem = props => {
   return (
     <li
       key={props.patient.id + 99}
@@ -79,6 +79,6 @@ function ListItem(props) {
       </button>
     </li>
   );
-}
+};
 
 export default ListItem;

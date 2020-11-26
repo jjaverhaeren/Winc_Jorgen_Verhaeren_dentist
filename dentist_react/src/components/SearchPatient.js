@@ -1,6 +1,6 @@
 import React from "react";
 
-function SearchPatient(props) {
+const SearchPatient = props => {
   return (
     <div className="search_patient_container">
       <h3>Zoek patient:</h3>
@@ -31,6 +31,6 @@ function SearchPatient(props) {
       <button onClick={props.showAllPatients}>Show Patients List</button>
     </div>
   );
-}
+};
 
 export default SearchPatient;

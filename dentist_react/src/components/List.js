@@ -1,7 +1,7 @@
 import React from "react";
 import ListItem from "./ListItem";
 
-function List(props) {
+const List = props => {
   let itemsArray = props.items.map(item => (
     <ListItem
       key={item.id}
@@ -29,6 +29,6 @@ function List(props) {
       {itemsArray}
     </div>
   );
-}
+};
 
 export default List;
