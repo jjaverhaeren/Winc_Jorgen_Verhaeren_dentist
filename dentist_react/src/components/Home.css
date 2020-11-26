@@ -1,0 +1,246 @@
+.add,
+.dentists,
+.assistents,
+.foundPatients,
+.patients,
+.addAppointment {
+  background-color: lightyellow;
+  margin: 20px 10px;
+  padding: 10px;
+}
+
+button {
+  margin: 3px;
+}
+
+.add_form input {
+  margin: 3px;
+}
+
+.skills label {
+  display: block;
+}
+
+.trashbin {
+  width: 17px;
+  height: auto;
+  margin: 5px 0px;
+  cursor: pointer;
+}
+
+.add_form {
+  margin: 20px 0px;
+}
+
+label,
+input {
+  margin: 0px 1px;
+}
+
+.list {
+  list-style: none;
+  width: 1000px;
+  margin: 0px 0px 0px;
+}
+
+h3 {
+  margin: 0px;
+}
+
+.search_patient_container {
+  margin: 20px 0px;
+}
+
+.list_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.list_id {
+  margin: 5px;
+  list-style: none;
+  display: inline;
+  width: 50px;
+  padding: 0px 0px;
+  text-align: center;
+}
+
+.list_name {
+  margin: 5px;
+  list-style: none;
+  display: inline;
+  width: 120px;
+}
+
+.list_surname {
+  margin: 5px;
+  list-style: none;
+  display: inline;
+  width: 120px;
+}
+
+.list_tel {
+  margin: 5px;
+  list-style: none;
+  display: inline;
+  width: 110px;
+}
+
+.list_email {
+  margin: 5px;
+  list-style: none;
+  display: inline;
+  width: 220px;
+}
+
+.list_year {
+  margin: 5px;
+  list-style: none;
+  display: inline;
+  width: 50px;
+}
+
+.list_skill {
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+  margin: 5px;
+  padding: 0px;
+  border-radius: 50%;
+}
+
+.button_appointment {
+  margin: 5px;
+}
+
+.button_sick {
+  margin: 5px;
+}
+
+.headers_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  background-color: aquamarine;
+  color: black;
+}
+
+.header_id {
+  display: inline;
+  padding: 0px;
+  width: 50px;
+  padding: 0px 0px;
+  margin-left: 6px;
+  text-align: center;
+}
+
+.header_name {
+  display: inline;
+  padding: 0px 0px;
+  width: 120px;
+  margin-left: 8px;
+}
+
+.header_surname {
+  display: inline;
+  padding: 0px 0px;
+  width: 120px;
+  margin-left: 8px;
+}
+
+.header_tel {
+  display: inline;
+  padding: 0px 0px;
+  margin-left: 10px;
+}
+
+.header_email {
+  display: inline;
+  padding: 0px 0px;
+  margin-left: 100px;
+}
+
+.header_year {
+  display: inline;
+  padding: 0px 0px;
+  margin-left: 185px;
+}
+
+.header_skillF {
+  margin-left: 195px;
+}
+
+.header_skillC,
+.header_skillP,
+.header_skillJ {
+  margin-left: 9px;
+}
+
+.dentists .header_year {
+  display: none;
+}
+
+.assistents .header_year {
+  display: none;
+}
+
+.dentists .list_year {
+  display: none;
+}
+
+.assistents .list_year {
+  display: none;
+}
+
+.assistents .list_skill {
+  display: none;
+}
+
+.assistents .header_skillF,
+.assistents .header_skillP,
+.assistents .header_skillC,
+.assistents .header_skillJ {
+  display: none;
+}
+
+.patients .list_skill {
+  display: none;
+}
+
+.patients .header_skillF,
+.patients .header_skillP,
+.patients .header_skillC,
+.patients .header_skillJ {
+  display: none;
+}
+
+.dentists .trashbin {
+  display: none;
+}
+
+.dentists .button_appointment {
+  display: none;
+}
+
+.assistents .button_appointment,
+.assistents .button_sick {
+  display: none;
+}
+
+.assistents .trashbin {
+  display: none;
+}
+
+.foundPatients .header_skillF,
+.foundPatients .header_skillP,
+.foundPatients .header_skillC,
+.foundPatients .header_skillJ {
+  display: none;
+}
+
+.foundPatients .list_skill {
+  display: none;
+}
