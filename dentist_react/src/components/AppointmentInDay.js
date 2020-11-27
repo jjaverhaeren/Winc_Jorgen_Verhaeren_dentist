@@ -21,6 +21,15 @@ const AppointmentInDay = props => {
       })
     : (patientStyle = { backgroundColor: "deepskyblue", color: "black" });
 
+  let assistentStyle;
+  props.sickAssistent
+    ? (assistentStyle = {
+        backgroundColor: "orange",
+        color: "white",
+        fontWeight: "bold",
+      })
+    : (assistentStyle = { backgroundColor: "lightyellow", color: "black" });
+
   return (
     <li className="appointment">
       <div className="time">{format_time(props.time)}</div>
@@ -30,7 +39,9 @@ const AppointmentInDay = props => {
       <div className="dentist" style={dentistStyle}>
         Tandarts: {props.dentist}
       </div>
-      <div className="assistant">Assistent: {props.assistant}</div>
+      <div className="assistant" style={assistentStyle}>
+        Assistent: {props.assistent}
+      </div>
     </li>
   );
 };

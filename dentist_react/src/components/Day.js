@@ -11,7 +11,7 @@ function Day(props) {
       time={props.time}
       patient={props.patient}
       dentist={props.dentist}
-      assistant={props.assistant}
+      assistent={props.assistent}
       sickDentist={props.sickDentist}
       key={index}
     />
