@@ -24,7 +24,7 @@ const generateRandomAppointment = () => ({
   time: getRandomTime(),
   patient: getRandomName(patients, 50),
   dentist: getRandomName(dentists, 4),
-  assistant: getRandomName(assistents, 3),
+  assistent: getRandomName(assistents, 3),
 });
 
 const generateRandomAppointments = num =>
