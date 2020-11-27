@@ -15,8 +15,14 @@ nav li {
 }
 
 nav {
-  margin-bottom: 4rem;
+  margin:0 auto;
   font-size: 2rem;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 20px 0px 20px 75px;
+  background-color: rgb(159, 183, 207);
 }
 
 nav a {
