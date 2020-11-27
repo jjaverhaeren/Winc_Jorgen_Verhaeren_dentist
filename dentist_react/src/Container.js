@@ -53,7 +53,7 @@ class Container extends Component {
     this.handleSearchPatient = this.handleSearchPatient.bind(this);
     this.handleClickToAdd = this.handleClickToAdd.bind(this);
     this.handleSick = this.handleSick.bind(this);
-    this.clearSearchFields = this.clearSearchFields.bind(this);
+    this.clearFoundPatientsList = this.clearFoundPatientsList.bind(this);
     this.handleMakeAppointment = this.handleMakeAppointment.bind(this);
     this.handleSubmitAppointment = this.handleSubmitAppointment.bind(this);
     this.showAllPatients = this.showAllPatients.bind(this);
@@ -67,20 +67,36 @@ class Container extends Component {
       : this.setState({ [name]: value });
   }
 
-  clearSearchFields() {
-    console.log("clear search fields");
-    this.foundPatients = [];
-    this.setState({ foundPatients: this.foundPatients });
+  clearFoundPatientsList() {
+    let newFoundPatients = [];
+    this.setState(prevState => {
+      const newState = { ...prevState, foundPatients: newFoundPatients };
+      return newState;
+    });
   }
 
   clearInputFields() {
-    this.setState({
-      id: 0,
-      name: "",
-      surname: "",
-      tel: "",
-      email: "",
-      year: "",
+    let resetId = 0,
+      resetName = "",
+      resetSurname = "",
+      resetTel = "",
+      resetEmail = "",
+      resetYear = "",
+      resetSearchId = "",
+      resetSearchSurname = "";
+    this.setState(prevState => {
+      const newState = {
+        ...prevState,
+        id: resetId,
+        name: resetName,
+        surname: resetSurname,
+        tel: resetTel,
+        email: resetEmail,
+        year: resetYear,
+        searchId: resetSearchId,
+        searchSurname: resetSearchSurname,
+      };
+      return newState;
     });
   }
 
@@ -222,6 +238,7 @@ class Container extends Component {
     }
   }
 
+  //deletePatient DRY maken!
   deletePatient(event) {
     event.preventDefault();
     const toDelete = parseInt(
@@ -230,15 +247,23 @@ class Container extends Component {
     this.state.patients.forEach(patient => {
       if (toDelete === patient.id) {
         let index = this.state.patients.indexOf(patient);
-        this.state.patients.splice(index, 1);
-        this.setState({ patients: this.state.patients });
+        this.setState(prevState => {
+          const newPatients = [...prevState.patients];
+          newPatients.splice(index, 1);
+          const newState = { ...prevState, patients: newPatients };
+          return newState;
+        });
       }
     });
     this.state.foundPatients.forEach(patient => {
       if (toDelete === patient.id) {
         let index = this.state.foundPatients.indexOf(patient);
-        this.state.foundPatients.splice(index, 1);
-        this.setState({ foundPatients: this.state.foundPatients });
+        this.setState(prevState => {
+          const newFoundPatients = [...prevState.foundPatients];
+          newFoundPatients.splice(index, 1);
+          const newState = { ...prevState, foundPatients: newFoundPatients };
+          return newState;
+        });
       }
     });
   }
@@ -255,10 +280,16 @@ class Container extends Component {
         patient.id === searchId ||
         patient.surname.toLowerCase() === searchSurname.toLowerCase()
       ) {
-        this.state.foundPatients.push(patient);
+        this.setState(prevState => {
+          const newFoundPatients = [...prevState.foundPatients];
+          newFoundPatients.push(patient);
+          const newState = { ...prevState, foundPatients: newFoundPatients };
+          return newState;
+        });
       }
     });
-    this.setState({ foundPatients: this.state.foundPatients });
+    this.clearInputFields();
+    //clearInputFields werkt nog niet.
   }
 
   updateAppointId(evt) {
@@ -269,10 +300,7 @@ class Container extends Component {
 
   handleSubmitAppointment(event) {
     event.preventDefault();
-    let newAppointment = {},
-      dentistName,
-      assistentName,
-      assistentSurname;
+    let newAppointment = {};
 
     newAppointment.day = parseInt(event.target[3].value);
     newAppointment.time = parseInt(event.target[4].value);
@@ -283,9 +311,14 @@ class Container extends Component {
       }
     });
 
-    dentistName = event.target[1].value;
+    this.state.assistents.forEach(assistent => {
+      if (assistent.name === event.target[2].value) {
+        newAppointment.assistent = `${assistent.name} ${assistent.surname}`;
+      }
+    });
+
     this.state.dentists.forEach(dentist => {
-      if (dentist.name === dentistName) {
+      if (dentist.name === event.target[1].value) {
         newAppointment.dentist = `${dentist.name} ${dentist.surname}`;
         this.state.appointments.forEach(appointment => {
           if (
@@ -303,20 +336,15 @@ class Container extends Component {
       }
     });
 
-    assistentName = event.target[2].value;
-    this.state.assistents.forEach(assistent => {
-      if (assistent.name === assistentName) {
-        assistentSurname = assistent.surname;
-        newAppointment.assistent = `${assistentName} ${assistentSurname}`;
-      }
+    this.setState(prevState => {
+      const updatedAppointments = [...prevState.appointments];
+      updatedAppointments.push(newAppointment);
+      updatedAppointments.sort((a, b) =>
+        a.day > b.day ? 1 : b.day > a.day ? -1 : 0
+      );
+      const newState = { ...prevState, appointments: updatedAppointments };
+      return newState;
     });
-
-    this.state.appointments.push(newAppointment);
-
-    this.state.appointments.sort((a, b) =>
-      a.day > b.day ? 1 : b.day > a.day ? -1 : 0
-    );
-    this.setState({ appointments: this.state.appointments });
   }
 
   handleMakeAppointment(event) {
@@ -380,7 +408,7 @@ class Container extends Component {
                   canCrown={this.canCrown}
                   canPull={this.canPull}
                   canJaw={this.canJaw}
-                  searchId={this.state.searchID}
+                  searchId={this.state.searchId}
                   searchSurname={this.state.searchSurname}
                   patients={this.state.patients}
                   dentists={this.state.dentists}
@@ -393,7 +421,7 @@ class Container extends Component {
                   chooseHour={this.state.chooseHour}
                   idForAppointment={this.idForAppointment}
                   showing={this.state.showing}
-                  clearSearchFields={this.clearSearchFields}
+                  clearFoundPatientsList={this.clearFoundPatientsList}
                   deletePatient={this.deletePatient}
                   handleSick={this.handleSick}
                   handleChange={this.handleChange}
