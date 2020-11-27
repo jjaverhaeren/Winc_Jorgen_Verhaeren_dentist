@@ -13,7 +13,7 @@ import assistents from "./data/assistents";
 import days from "./data/days";
 import time from "./data/time";
 
-let appointments = generateRandomAppointments(150);
+let appointments = generateRandomAppointments(20);
 
 class Container extends Component {
   constructor() {
@@ -334,7 +334,6 @@ class Container extends Component {
         });
       }
     });
-
     this.setState(prevState => {
       const updatedAppointments = [...prevState.appointments];
       updatedAppointments.push(newAppointment);
