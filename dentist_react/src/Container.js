@@ -101,34 +101,32 @@ class Container extends Component {
   }
 
   handleClickToAdd(event) {
-    if (event.target.parentElement.firstChild.value === "isPatient") {
-      event.target.parentElement.parentElement.childNodes[7].style =
-        "display:inline";
-      event.target.parentElement.parentElement.childNodes[8].style =
-        "display: none";
-    } else if (event.target.parentElement.firstChild.value === "isDentist") {
-      event.target.parentElement.parentElement.childNodes[7].style =
-        "display:none";
-      event.target.parentElement.parentElement.childNodes[8].style =
-        "display: block";
-    } else if (event.target.parentElement.firstChild.value === "isAssistent") {
-      event.target.parentElement.parentElement.childNodes[7].style =
-        "display:none";
-      event.target.parentElement.parentElement.childNodes[8].style =
-        "display: none";
+    let value = event.target.parentElement.firstChild.value,
+      target = event.target.parentElement.parentElement.childNodes;
+
+    if (value === "isPatient") {
+      target[7].style = "display:inline";
+      target[8].style = "display: none";
+    } else if (value === "isDentist") {
+      target[7].style = "display:none";
+      target[8].style = "display: block";
+    } else if (value === "isAssistent") {
+      target[7].style = "display:none";
+      target[8].style = "display: none";
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    let target = event.target.childNodes;
 
-    if (event.target.childNodes[0].firstChild.checked === true) {
+    if (target[0].firstChild.checked === true) {
       let newId = this.state.patients.length + 1;
-      let newName = event.target.childNodes[3].value;
-      let newSurname = event.target.childNodes[4].value;
-      let newTel = event.target.childNodes[5].value;
-      let newEmail = event.target.childNodes[6].value;
-      let newYear = event.target.childNodes[7].value;
+      let newName = target[3].value;
+      let newSurname = target[4].value;
+      let newTel = target[5].value;
+      let newEmail = target[6].value;
+      let newYear = target[7].value;
 
       let newPatient = {
         id: newId,
@@ -137,27 +135,23 @@ class Container extends Component {
         tel: newTel,
         email: newEmail,
         year: newYear,
-        isIll: false,
+        isSick: false,
       };
       this.setState(prevState => ({
         patients: [...prevState.patients, newPatient],
       }));
 
       this.clearInputFields();
-    } else if (event.target.childNodes[1].firstChild.checked === true) {
+    } else if (target[1].firstChild.checked === true) {
       let newId = this.state.dentists.length + 1;
-      let newName = event.target.childNodes[3].value;
-      let newSurname = event.target.childNodes[4].value;
-      let newTel = event.target.childNodes[5].value;
-      let newEmail = event.target.childNodes[6].value;
-      let newCanFill =
-        event.target.childNodes[8].childNodes[1].childNodes[0].checked;
-      let newCanCrown =
-        event.target.childNodes[8].childNodes[2].childNodes[0].checked;
-      let newCanPull =
-        event.target.childNodes[8].childNodes[3].childNodes[0].checked;
-      let newCanJaw =
-        event.target.childNodes[8].childNodes[4].childNodes[0].checked;
+      let newName = target[3].value;
+      let newSurname = target[4].value;
+      let newTel = target[5].value;
+      let newEmail = target[6].value;
+      let newCanFill = target[8].childNodes[1].childNodes[0].checked;
+      let newCanCrown = target[8].childNodes[2].childNodes[0].checked;
+      let newCanPull = target[8].childNodes[3].childNodes[0].checked;
+      let newCanJaw = target[8].childNodes[4].childNodes[0].checked;
 
       let newDentist = {
         id: newId,
@@ -175,13 +169,13 @@ class Container extends Component {
         dentists: [...prevState.dentists, newDentist],
       }));
       this.clearInputFields();
-    } else if (event.target.childNodes[2].firstChild.checked === true) {
+    } else if (target[2].firstChild.checked === true) {
       let newId = this.state.assistents.length + 1;
-      let newName = event.target.childNodes[3].value;
-      let newSurname = event.target.childNodes[4].value;
-      let newTel = event.target.childNodes[5].value;
-      let newEmail = event.target.childNodes[6].value;
-      let newYear = event.target.childNodes[7].value;
+      let newName = target[3].value;
+      let newSurname = target[4].value;
+      let newTel = target[5].value;
+      let newEmail = target[6].value;
+      let newYear = target[7].value;
 
       let newAssistent = {
         id: newId,
@@ -202,10 +196,12 @@ class Container extends Component {
   handleSick(event) {
     event.preventDefault();
     let category =
-      event.target.parentElement.parentElement.parentElement.className;
+        event.target.parentElement.parentElement.parentElement.className,
+      name = event.target.parentElement.childNodes[1].innerHTML,
+      surname = event.target.parentElement.childNodes[2].innerHTML;
     switch (category) {
       case "dentists":
-        let sickDentist = `${event.target.parentElement.childNodes[1].innerHTML}${event.target.parentElement.childNodes[2].innerHTML}`;
+        let sickDentist = `${name}${surname}`;
         this.state.appointments.forEach(appointment => {
           appointment.dentist === sickDentist
             ? (appointment.sickDentist = true)
@@ -214,7 +210,7 @@ class Container extends Component {
 
         break;
       case "assistents":
-        let sickAssistent = `${event.target.parentElement.childNodes[1].innerHTML}${event.target.parentElement.childNodes[2].innerHTML}`;
+        let sickAssistent = `${name}${surname}`;
         this.state.appointments.forEach(appointment => {
           appointment.assistent === sickAssistent
             ? (appointment.sickAssistent = true)
@@ -224,12 +220,16 @@ class Container extends Component {
         break;
       case "patients":
       case "foundPatients":
-        let sickPatient = `${event.target.parentElement.childNodes[1].innerHTML}${event.target.parentElement.childNodes[2].innerHTML}`;
+        let sickPatient = `${name}${surname}`;
         this.state.appointments.forEach(appointment => {
           if (appointment.patient === sickPatient) {
             let index = this.state.appointments.indexOf(appointment);
-            this.state.appointments.splice(index, 1);
-            this.setState({ appointments: this.state.appointments });
+            this.setState(prevState => {
+              const newAppointments = [...prevState.appointments];
+              newAppointments.splice(index, 1);
+              const newState = { ...prevState, appointments: newAppointments };
+              return newState;
+            });
           }
         });
         break;
@@ -287,9 +287,8 @@ class Container extends Component {
           return newState;
         });
       }
+      this.clearInputFields();
     });
-    this.clearInputFields();
-    //clearInputFields werkt nog niet.
   }
 
   updateAppointId(evt) {
