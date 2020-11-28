@@ -238,35 +238,25 @@ class Container extends Component {
     }
   }
 
-  //deletePatient DRY maken!
+  deleteFromList(toDelete, array) {
+    this.state.array.forEach(element => {
+      if (toDelete === element.id) {
+        let index = this.state.array.indexOf(element);
+        this.setState({ array: [...this.state.array].splice(index, 1) });
+      }
+    });
+  }
+
   deletePatient(event) {
     event.preventDefault();
     const toDelete = parseInt(
       event.target.parentElement.childNodes[0].innerHTML
     );
-    this.state.patients.forEach(patient => {
-      if (toDelete === patient.id) {
-        let index = this.state.patients.indexOf(patient);
-        this.setState(prevState => {
-          const newPatients = [...prevState.patients];
-          newPatients.splice(index, 1);
-          const newState = { ...prevState, patients: newPatients };
-          return newState;
-        });
-      }
-    });
-    this.state.foundPatients.forEach(patient => {
-      if (toDelete === patient.id) {
-        let index = this.state.foundPatients.indexOf(patient);
-        this.setState(prevState => {
-          const newFoundPatients = [...prevState.foundPatients];
-          newFoundPatients.splice(index, 1);
-          const newState = { ...prevState, foundPatients: newFoundPatients };
-          return newState;
-        });
-      }
-    });
-  }
+    const patients = this.state.patients;
+    const foundPatients = this.state.foundPatients;
+    this.deleteFromList(toDelete, patients);
+    this.deleteFromList(toDelete, foundPatients);
+  };
 
   handleSearchPatient(event) {
     event.preventDefault();
